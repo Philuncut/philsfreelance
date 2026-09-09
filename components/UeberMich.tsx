@@ -3,53 +3,76 @@ import Image from "next/image";
 import foto from "@/public/ueber-mich.jpg";
 
 /*
- * Ein einziger senkrechter Verlauf, an beiden Enden deckend, in der Mitte
- * offen. Oben und unten trifft er exakt rgb(5 7 10), die Hintergrundfarbe von
- * Projektsektion und Textteil, sonst bliebe an der Kante eine Naht stehen.
+ * Drei uebereinanderliegende Verlaeufe, alle in derselben Farbe rgb(5 7 10),
+ * der Hintergrundfarbe von Projektsektion und Textteil. Sie multiplizieren
+ * sich zu einer Deckkraft, die oben und unten exakt 1 erreicht, sonst bliebe
+ * an der Kante eine Naht stehen.
  *
- * Oben laeuft er ueber 34 Prozent der Bildhoehe aus, unten braucht er das
- * letzte Drittel. Der Himmel ist hell, dort faellt jede Kante auf, deshalb
- * siebzehn Stufen fuer den oberen Weg: erst steil von deckend auf 0,75, dann
- * immer flacher werdend. Die Stopps stehen dicht, wo die Kurve sich stark
- * biegt, und weit, wo sie fast gerade laeuft. Wenige, gleichmaessig verteilte
- * Stopps erzeugen genau den Knick, den das Auge als Naht liest.
+ * Warum drei statt einem: unten liegt der Verlauf ueber dunklem Wald, oben
+ * ueber hellem Himmel. Derselbe Deckkraftverlauf hat dort die vierfache
+ * Wirkung auf die Helligkeit, und das Auge findet jeden Knick. Der obere Weg
+ * ist deshalb doppelt so lang wie der untere und aus zwei Kurven gebaut:
  *
- * Alle Stufen tragen dieselbe Farbe rgb(5 7 10) und aendern nur die
- * Deckkraft. Eine abweichende Zwischenfarbe, allen voran das als rgba(0 0 0 /
- * 0) definierte transparent, legte sonst einen grauen Schleier ueber den
- * Himmel.
+ * DECKUNG OBEN faellt in den ersten 17 Prozent schnell von deckend auf null.
+ * SCHLEIER OBEN legt darueber einen sehr flachen Auslauf ueber 58 Prozent.
+ * DECKUNG UNTEN traegt die Schrift und schliesst an den Textteil an.
  *
- * Bei 34 bis 42 Prozent liegt die Sohle: der Wert trifft genau die 0,10, mit
- * denen der untere Weg ohnehin ansetzt, sonst saesse an der Nahtstelle
- * zwischen beiden Wegen wieder eine Kante.
+ * Beide oberen Kurven folgen (1 - y)^n, also einem Ease-out: steil am Anfang,
+ * und der Auslauf endet mit Steigung null statt in einem Knick. Genau dieser
+ * Knick am Ende eines geraden Verlaufs ist die Kante, die man sieht. Die
+ * Stopps sind aus der Kurve abgetastet, dicht wo sie sich biegt.
  *
- * Ein zweiter Verlauf von links waere hier falsch: er verdeckt genau die
- * Crew, die das Bild zeigen soll. Die Schrift sitzt tief genug, um allein
- * vom senkrechten Verlauf getragen zu werden.
+ * Ein Verlauf von links waere hier falsch: er verdeckt genau die Crew, die
+ * das Bild zeigen soll. Die Schrift sitzt tief genug, um allein von der
+ * unteren Deckung getragen zu werden.
  */
 const VERLAUF = `linear-gradient(
     to bottom,
     rgb(5 7 10 / 1) 0%,
-    rgb(5 7 10 / 0.86) 1%,
-    rgb(5 7 10 / 0.75) 2%,
-    rgb(5 7 10 / 0.655) 3.5%,
-    rgb(5 7 10 / 0.58) 5%,
-    rgb(5 7 10 / 0.505) 7%,
-    rgb(5 7 10 / 0.44) 9%,
-    rgb(5 7 10 / 0.385) 11%,
-    rgb(5 7 10 / 0.335) 13%,
-    rgb(5 7 10 / 0.275) 16%,
-    rgb(5 7 10 / 0.245) 18%,
-    rgb(5 7 10 / 0.205) 21%,
-    rgb(5 7 10 / 0.183) 23%,
-    rgb(5 7 10 / 0.155) 26%,
-    rgb(5 7 10 / 0.14) 28%,
-    rgb(5 7 10 / 0.12) 31%,
-    rgb(5 7 10 / 0.105) 34%,
-    rgb(5 7 10 / 0.10) 42%,
-    rgb(5 7 10 / 0.17) 50%,
+    rgb(5 7 10 / 0.864) 1%,
+    rgb(5 7 10 / 0.738) 2.1%,
+    rgb(5 7 10 / 0.623) 3.1%,
+    rgb(5 7 10 / 0.517) 4.2%,
+    rgb(5 7 10 / 0.42) 5.3%,
+    rgb(5 7 10 / 0.334) 6.4%,
+    rgb(5 7 10 / 0.257) 7.5%,
+    rgb(5 7 10 / 0.191) 8.7%,
+    rgb(5 7 10 / 0.134) 9.9%,
+    rgb(5 7 10 / 0.087) 11.2%,
+    rgb(5 7 10 / 0.05) 12.5%,
+    rgb(5 7 10 / 0.024) 14%,
+    rgb(5 7 10 / 0.007) 15.5%,
+    rgb(5 7 10 / 0) 17.4%
+  ),
+  linear-gradient(
+    to bottom,
+    rgb(5 7 10 / 0.55) 0%,
+    rgb(5 7 10 / 0.441) 4.1%,
+    rgb(5 7 10 / 0.344) 8.4%,
+    rgb(5 7 10 / 0.259) 12.8%,
+    rgb(5 7 10 / 0.187) 17.5%,
+    rgb(5 7 10 / 0.126) 22.5%,
+    rgb(5 7 10 / 0.077) 27.9%,
+    rgb(5 7 10 / 0.04) 33.8%,
+    rgb(5 7 10 / 0.015) 40.5%,
+    rgb(5 7 10 / 0.002) 49%,
+    rgb(5 7 10 / 0) 58%
+  ),
+  linear-gradient(
+    to bottom,
+    rgb(5 7 10 / 0) 38%,
+    rgb(5 7 10 / 0.02) 42%,
+    rgb(5 7 10 / 0.05) 45%,
+    rgb(5 7 10 / 0.09) 47.5%,
+    rgb(5 7 10 / 0.13) 50%,
+    rgb(5 7 10 / 0.19) 53%,
+    rgb(5 7 10 / 0.26) 56%,
+    rgb(5 7 10 / 0.33) 59%,
     rgb(5 7 10 / 0.40) 62%,
+    rgb(5 7 10 / 0.56) 70%,
+    rgb(5 7 10 / 0.68) 76%,
     rgb(5 7 10 / 0.82) 84%,
+    rgb(5 7 10 / 0.93) 92%,
     rgb(5 7 10 / 1) 100%
   )`;
 
