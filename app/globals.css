@@ -17,7 +17,9 @@
   --font-mono: var(--font-geist-mono);
 
   --ease-hero: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --animate-hero-fade: hero-fade 1200ms var(--ease-hero) both;
+  /* Aufblenden und langsames Heranfahren laufen parallel, beide nur einmal */
+  --animate-hero-image: hero-fade 1200ms var(--ease-hero) both,
+    hero-zoom 8000ms var(--ease-hero) both;
   --animate-hero-rise: hero-rise 900ms var(--ease-hero) both;
 }
 
@@ -28,6 +30,15 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale3d(1.06, 1.06, 1);
+  }
+  to {
+    transform: none;
   }
 }
 

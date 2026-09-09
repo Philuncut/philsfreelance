@@ -10,7 +10,8 @@ export function Hero() {
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-background">
       {/* Bildbereich: mobil obere Bildschirmhälfte, ab md vollflächig hinter dem Text */}
-      <div className="relative -z-20 h-[48svh] w-full shrink-0 md:absolute md:inset-0 md:h-auto">
+      {/* overflow-hidden faengt die 6 Prozent Ueberstand des Heranfahrens ab */}
+      <div className="relative -z-20 h-[48svh] w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto">
         <Image
           src={heroImage}
           alt=""
@@ -18,7 +19,7 @@ export function Hero() {
           priority
           placeholder="blur"
           sizes="100vw"
-          className="object-cover object-[18%_28%] animate-hero-fade md:object-[30%_center]"
+          className="object-cover object-[18%_28%] animate-hero-image md:object-[30%_center]"
         />
 
         {/* Weicher Auslauf ins Dunkle, nur im geteilten Layout */}
