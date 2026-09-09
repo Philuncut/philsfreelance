@@ -31,6 +31,8 @@
   --animate-hero-image: hero-fade 1200ms var(--ease-hero) both,
     hero-zoom 8000ms var(--ease-hero) both;
   --animate-hero-rise: hero-rise 900ms var(--ease-hero) both;
+  /* Nur Deckkraft, kein Versatz: die Unterschrift soll nicht mitwandern. */
+  --animate-signature: signature-fade 900ms var(--ease-hero) both;
 }
 
 /* Nur Deckkraft und Transform werden animiert: kein Umbruch, kein Zappeln. */
@@ -49,6 +51,21 @@
   }
   to {
     transform: none;
+  }
+}
+
+/*
+ * Endet bei 0,8 statt bei 1. Die Unterschrift steht neben der Headline und
+ * soll ihr nicht die Aufmerksamkeit nehmen; die Deckkraft gehoert deshalb in
+ * die Kurve und nicht als eigene Klasse daneben, sonst ueberschriebe die
+ * Animation sie wieder.
+ */
+@keyframes signature-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.8;
   }
 }
 

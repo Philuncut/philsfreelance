@@ -1,5 +1,6 @@
 import Image from "next/image";
 import heroImage from "@/public/hero.png";
+import unterschrift from "@/public/unterschrift.png";
 
 /**
  * Zwei Layouts, ein DOM:
@@ -55,6 +56,28 @@ export function Hero() {
             linear-gradient(to right, rgb(5 7 10 / 0.55), rgb(5 7 10 / 0) 65%)
           `,
         }}
+      />
+
+      {/*
+        Unterschrift oben rechts, auf denselben Randabständen wie der Textblock
+        darunter. Der Abstand nach oben steht in svh statt in Pixeln: so sitzt
+        sie auf jedem Gerät im oberen Drittel, bleibt auf dem Handy weit unter
+        der Statusleiste und deutlich über der Kante bei 48svh, an der das Bild
+        in den dunklen Textbereich übergeht.
+
+        clamp(120px, 26vw, 200px): 120 auf dem Handy, ab 768px die vollen 200.
+        Die Deckkraft steckt in der Animation, nicht in einer eigenen Klasse,
+        sonst überschriebe die Animation sie wieder.
+      */}
+      <Image
+        src={unterschrift}
+        alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
+        sizes="(min-width: 768px) 200px, 120px"
+        className="
+          animate-signature absolute top-[14svh] right-6 h-auto
+          w-[clamp(120px,26vw,200px)] [animation-delay:1100ms]
+          sm:right-12 md:top-[16svh] md:right-24
+        "
       />
 
       {/*
