@@ -5,7 +5,7 @@ import { CodeHintergrund } from "@/components/CodeHintergrund";
 import { PROJEKTE, type Projekt } from "@/content/projekte";
 
 /** Breite der Bildspalte, damit next/image nicht zu grosse Dateien ausliefert. */
-const SIZES_HALB = "(min-width: 1280px) 516px, (min-width: 768px) 46vw, 100vw";
+const SIZES_HALB = "(min-width: 1280px) 496px, (min-width: 768px) 44vw, 100vw";
 const SIZES_VOLL = "(min-width: 1280px) 1088px, (min-width: 768px) 92vw, 100vw";
 
 /*
@@ -143,7 +143,9 @@ export function Projekte() {
           ) : (
             <article
               key={projekt.slug}
-              className="grid gap-8 md:grid-cols-2 md:items-center md:gap-14"
+              // Breiter Spaltenabstand: die weichen Raender der beiden Deckungen
+              // brauchen je rund 24px, dazwischen soll Code sichtbar bleiben.
+              className="grid gap-8 md:grid-cols-2 md:items-center md:gap-24"
             >
               {/* Ab md wechselt die Bildspalte die Seite, gestapelt steht das Bild immer oben. */}
               <Spalte
