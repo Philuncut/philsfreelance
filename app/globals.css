@@ -21,6 +21,8 @@
   --animate-hero-image: hero-fade 1200ms var(--ease-hero) both,
     hero-zoom 8000ms var(--ease-hero) both;
   --animate-hero-rise: hero-rise 900ms var(--ease-hero) both;
+  /* Dasselbe Heranfahren wie im Hero, ohne das Aufblenden */
+  --animate-slow-zoom: hero-zoom 8000ms var(--ease-hero) both;
 }
 
 /* Nur Deckkraft und Transform werden animiert: kein Umbruch, kein Zappeln. */

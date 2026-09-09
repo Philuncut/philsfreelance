@@ -3,25 +3,21 @@ import Image from "next/image";
 import foto from "@/public/ueber-mich.jpg";
 
 /*
- * Verlauf wie im Hero: senkrecht von offen nach deckend, dazu einer von links.
- * Der linke traegt die Schrift, der senkrechte schliesst unten nahtlos an den
- * Textbereich an. Ohne den linken muesste der senkrechte so frueh dunkeln,
- * dass das Fernsteuerungsgeraet im unteren Bilddrittel verschwindet.
+ * Ein einziger senkrechter Verlauf, funfstufig. Oben voellig offen, damit die
+ * Drohne und der Abendhimmel stehen bleiben; die Deckkraft zieht erst im
+ * unteren Drittel an und endet exakt auf der Hintergrundfarbe, sodass der
+ * untere Bildrand ohne sichtbare Kante in die Textsektion laeuft.
+ * Ein zweiter Verlauf von links waere hier falsch: er verdeckt genau die
+ * Crew, die das Bild zeigen soll. Die Schrift sitzt tief genug, um allein
+ * vom senkrechten Verlauf getragen zu werden.
  */
 const VERLAUF = `linear-gradient(
     to bottom,
     rgb(5 7 10 / 0) 0%,
-    rgb(5 7 10 / 0.12) 45%,
-    rgb(5 7 10 / 0.42) 76%,
-    rgb(5 7 10 / 0.90) 94%,
+    rgb(5 7 10 / 0.10) 38%,
+    rgb(5 7 10 / 0.40) 62%,
+    rgb(5 7 10 / 0.82) 84%,
     rgb(5 7 10 / 1) 100%
-  ),
-  linear-gradient(
-    to right,
-    rgb(5 7 10 / 0.88) 0%,
-    rgb(5 7 10 / 0.62) 32%,
-    rgb(5 7 10 / 0.18) 55%,
-    rgb(5 7 10 / 0) 70%
   )`;
 
 const ABSAETZE = [
@@ -39,22 +35,25 @@ const ABSAETZE = [
 export function UeberMich() {
   return (
     <section id="ueber-mich" className="bg-background">
-      {/*
-        Bild ueber die volle Breite. object-position 60% 45%: das Foto ist
-        quadratisch, im breiten Banner sind senkrecht nur rund 44 Prozent davon
-        zu sehen. 45 Prozent ist der Kompromiss, bei dem beide Gesichter im Bild
-        bleiben und das Fernsteuerungsgeraet unten rechts noch sichtbar ist.
-        Waagrecht 60 Prozent, damit das Geraet auf schmalen Schirmen nicht
-        rechts herausfaellt.
-      */}
-      <div className="relative h-[55svh] w-full overflow-hidden md:h-[70svh]">
+      {/* overflow-hidden faengt die 6 Prozent Ueberstand des Heranfahrens ab */}
+      <div className="relative h-[60svh] w-full overflow-hidden md:h-[75svh]">
+        {/*
+          object-position 50% top. Das Foto ist 3:2, im breiten Banner sind
+          senkrecht nur rund zwei Drittel davon zu sehen. Die Drohne haengt im
+          obersten Zehntel, deshalb liegt der Ausschnitt buendig an der
+          Oberkante und wird unten beschnitten, wo nur Boden und Kisten sind.
+          Waagrecht mittig: auf einem Handy bleiben damit sowohl die Drohne
+          links als auch die Person mit der Fernsteuerung rechts im Bild.
+          origin-top sorgt dafuer, dass auch das Heranfahren die Oberkante
+          stehen laesst und nur nach unten hin auslaeuft.
+        */}
         <Image
           src={foto}
-          alt="Zwei Personen an einem Drehort, eine von ihnen bedient ein Fernsteuerungsgerät"
+          alt="Filmcrew an einem Drehort über einem Fluss, eine Person steuert eine Drohne"
           fill
           sizes="100vw"
           placeholder="blur"
-          className="object-cover object-[60%_45%]"
+          className="animate-slow-zoom origin-top object-cover object-[50%_top]"
         />
 
         <div
@@ -63,12 +62,13 @@ export function UeberMich() {
           style={{ background: VERLAUF }}
         />
 
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 sm:px-12 md:px-24 md:pb-16">
-          <div className="reveal mx-auto w-full max-w-7xl">
+        {/* Gleiche Raender wie der Hero, damit Auszeichnung und Ueberschrift auf derselben Kante sitzen */}
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-12 sm:px-12 md:px-24 md:pb-20">
+          <div className="reveal max-w-4xl">
             <p className="text-sm tracking-[0.18em] text-muted uppercase">
               Über mich
             </p>
-            <h2 className="mt-3 text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.03em] text-balance leading-[1.08]">
+            <h2 className="mt-4 text-[clamp(2.25rem,5.6vw,4.5rem)] font-bold tracking-[-0.03em] text-balance leading-[1.04]">
               Ich bin kein reiner Entwickler.
             </h2>
           </div>
