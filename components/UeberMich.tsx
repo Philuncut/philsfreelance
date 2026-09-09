@@ -3,17 +3,28 @@ import Image from "next/image";
 import foto from "@/public/ueber-mich.jpg";
 
 /*
- * Ein einziger senkrechter Verlauf, funfstufig. Oben voellig offen, damit die
- * Drohne und der Abendhimmel stehen bleiben; die Deckkraft zieht erst im
- * unteren Drittel an und endet exakt auf der Hintergrundfarbe, sodass der
- * untere Bildrand ohne sichtbare Kante in die Textsektion laeuft.
+ * Ein einziger senkrechter Verlauf, an beiden Enden deckend, in der Mitte
+ * offen. Oben und unten trifft er exakt rgb(5 7 10), die Hintergrundfarbe von
+ * Projektsektion und Textteil, sonst bliebe an der Kante eine Naht stehen.
+ *
+ * Oben faellt er ueber 13 Prozent der Bildhoehe, unten braucht er das letzte
+ * Drittel. Der kurze Weg oben ist Absicht: die Drohne haengt je nach
+ * Fensterformat bei 5 bis 20 Prozent der Bannerhoehe, und was frueh offen ist,
+ * bleibt vom Himmel sichtbar. Steil abfallend statt gleichmaessig, damit die
+ * Deckkraft schon vor der Drohne fast bei null ist.
+ *
  * Ein zweiter Verlauf von links waere hier falsch: er verdeckt genau die
  * Crew, die das Bild zeigen soll. Die Schrift sitzt tief genug, um allein
  * vom senkrechten Verlauf getragen zu werden.
  */
 const VERLAUF = `linear-gradient(
     to bottom,
-    rgb(5 7 10 / 0) 0%,
+    rgb(5 7 10 / 1) 0%,
+    rgb(5 7 10 / 0.82) 2%,
+    rgb(5 7 10 / 0.46) 5%,
+    rgb(5 7 10 / 0.18) 8.5%,
+    rgb(5 7 10 / 0.05) 11%,
+    rgb(5 7 10 / 0) 13%,
     rgb(5 7 10 / 0.10) 38%,
     rgb(5 7 10 / 0.40) 62%,
     rgb(5 7 10 / 0.82) 84%,
