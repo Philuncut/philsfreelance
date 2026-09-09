@@ -1,15 +1,6 @@
 import Image from "next/image";
 import heroImage from "@/public/hero.png";
 
-const TECHNOLOGIES = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "PostgreSQL",
-  "AWS",
-];
-
 /**
  * Zwei Layouts, ein DOM:
  * - unter 768px zweigeteilt, Bild oben, Text darunter auf dunklem Grund
@@ -71,13 +62,12 @@ export function Hero() {
       */}
       <div className="max-w-4xl px-6 pt-10 pb-16 sm:px-12 md:px-24 md:pt-[46svh] md:pb-[10svh]">
         <h1 className="text-[clamp(2.5rem,7.2vw,6rem)] text-balance font-bold tracking-[-0.03em] leading-[1.04] animate-hero-rise [animation-delay:120ms]">
-          Streaming-Plattformen,
-          <br />
-          die wirklich laufen.
+          Ich baue Software, die läuft.
         </h1>
 
-        <p className="mt-6 max-w-[44ch] text-[clamp(0.95rem,1.5vw,1.25rem)] text-muted leading-relaxed tracking-[0.02em] animate-hero-rise [animation-delay:260ms]">
-          {TECHNOLOGIES.join(" · ")}
+        <p className="mt-6 max-w-[46ch] text-[clamp(0.95rem,1.5vw,1.25rem)] text-pretty text-muted leading-relaxed tracking-[0.02em] animate-hero-rise [animation-delay:260ms] md:max-w-[58ch]">
+          React, Next.js, Electron, Flutter und vieles mehr. Über 20 Jahre
+          Erfahrung in Web, Grafik und Bewegtbild.
         </p>
 
         <div className="mt-10 flex flex-wrap gap-4 animate-hero-rise [animation-delay:400ms]">
