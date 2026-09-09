@@ -43,12 +43,19 @@ export function Hero() {
           style={{ background: KOPF_VERLAUF }}
         />
 
-        <div className="relative px-6 pt-8 sm:px-12 md:px-24 md:pt-12">
+        {/*
+          Breite und Abstand nach oben wachsen mit derselben Steigung: 8,2 zu
+          72 unter md und 4,9 zu 43 darueber sind jeweils 11,4 Prozent, der
+          Abstand bleibt also im gleichen Verhaeltnis zur Wortmarke.
+          max-w-full faengt Geraete unter 380px ab, wo die 280 Pixel plus
+          Raender breiter waeren als der Schirm.
+        */}
+        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-24 md:pt-[clamp(48px,4.9vw,71px)]">
           <Image
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
-            sizes="(min-width: 768px) 340px, 200px"
-            className="animate-signature h-auto w-[clamp(200px,44.3vw,340px)] [animation-delay:300ms]"
+            sizes="(min-width: 1210px) 620px, (min-width: 768px) 520px, 280px"
+            className="animate-signature h-auto w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
           />
         </div>
       </header>
