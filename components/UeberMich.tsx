@@ -7,11 +7,21 @@ import foto from "@/public/ueber-mich.jpg";
  * offen. Oben und unten trifft er exakt rgb(5 7 10), die Hintergrundfarbe von
  * Projektsektion und Textteil, sonst bliebe an der Kante eine Naht stehen.
  *
- * Oben faellt er ueber 13 Prozent der Bildhoehe, unten braucht er das letzte
- * Drittel. Der kurze Weg oben ist Absicht: die Drohne haengt je nach
- * Fensterformat bei 5 bis 20 Prozent der Bannerhoehe, und was frueh offen ist,
- * bleibt vom Himmel sichtbar. Steil abfallend statt gleichmaessig, damit die
- * Deckkraft schon vor der Drohne fast bei null ist.
+ * Oben laeuft er ueber 34 Prozent der Bildhoehe aus, unten braucht er das
+ * letzte Drittel. Der Himmel ist hell, dort faellt jede Kante auf, deshalb
+ * siebzehn Stufen fuer den oberen Weg: erst steil von deckend auf 0,75, dann
+ * immer flacher werdend. Die Stopps stehen dicht, wo die Kurve sich stark
+ * biegt, und weit, wo sie fast gerade laeuft. Wenige, gleichmaessig verteilte
+ * Stopps erzeugen genau den Knick, den das Auge als Naht liest.
+ *
+ * Alle Stufen tragen dieselbe Farbe rgb(5 7 10) und aendern nur die
+ * Deckkraft. Eine abweichende Zwischenfarbe, allen voran das als rgba(0 0 0 /
+ * 0) definierte transparent, legte sonst einen grauen Schleier ueber den
+ * Himmel.
+ *
+ * Bei 34 bis 42 Prozent liegt die Sohle: der Wert trifft genau die 0,10, mit
+ * denen der untere Weg ohnehin ansetzt, sonst saesse an der Nahtstelle
+ * zwischen beiden Wegen wieder eine Kante.
  *
  * Ein zweiter Verlauf von links waere hier falsch: er verdeckt genau die
  * Crew, die das Bild zeigen soll. Die Schrift sitzt tief genug, um allein
@@ -20,12 +30,24 @@ import foto from "@/public/ueber-mich.jpg";
 const VERLAUF = `linear-gradient(
     to bottom,
     rgb(5 7 10 / 1) 0%,
-    rgb(5 7 10 / 0.82) 2%,
-    rgb(5 7 10 / 0.46) 5%,
-    rgb(5 7 10 / 0.18) 8.5%,
-    rgb(5 7 10 / 0.05) 11%,
-    rgb(5 7 10 / 0) 13%,
-    rgb(5 7 10 / 0.10) 38%,
+    rgb(5 7 10 / 0.86) 1%,
+    rgb(5 7 10 / 0.75) 2%,
+    rgb(5 7 10 / 0.655) 3.5%,
+    rgb(5 7 10 / 0.58) 5%,
+    rgb(5 7 10 / 0.505) 7%,
+    rgb(5 7 10 / 0.44) 9%,
+    rgb(5 7 10 / 0.385) 11%,
+    rgb(5 7 10 / 0.335) 13%,
+    rgb(5 7 10 / 0.275) 16%,
+    rgb(5 7 10 / 0.245) 18%,
+    rgb(5 7 10 / 0.205) 21%,
+    rgb(5 7 10 / 0.183) 23%,
+    rgb(5 7 10 / 0.155) 26%,
+    rgb(5 7 10 / 0.14) 28%,
+    rgb(5 7 10 / 0.12) 31%,
+    rgb(5 7 10 / 0.105) 34%,
+    rgb(5 7 10 / 0.10) 42%,
+    rgb(5 7 10 / 0.17) 50%,
     rgb(5 7 10 / 0.40) 62%,
     rgb(5 7 10 / 0.82) 84%,
     rgb(5 7 10 / 1) 100%
