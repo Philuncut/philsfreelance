@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import { CodeHintergrund } from "@/components/CodeHintergrund";
 import { PROJEKTE, type Projekt } from "@/content/projekte";
@@ -6,6 +7,38 @@ import { PROJEKTE, type Projekt } from "@/content/projekte";
 /** Breite der Bildspalte, damit next/image nicht zu grosse Dateien ausliefert. */
 const SIZES_HALB = "(min-width: 1280px) 516px, (min-width: 768px) 46vw, 100vw";
 const SIZES_VOLL = "(min-width: 1280px) 1088px, (min-width: 768px) 92vw, 100vw";
+
+/*
+ * Deckende Flaeche in Hintergrundfarbe hinter jedem Bild und jedem Textblock.
+ * Der weiche Rand kommt aus einem Schatten in derselben Farbe. Sie liegt
+ * bewusst ausserhalb des eingeblendeten Inhalts: laege sie darin, wuerde sie
+ * mit einblenden und der Code schiene waehrend der Animation durch das Bild.
+ */
+function Deckung() {
+  return (
+    <div
+      aria-hidden
+      data-deckung
+      className="pointer-events-none absolute -inset-2 -z-10 rounded-md bg-background shadow-[0_0_16px_4px_var(--background)]"
+    />
+  );
+}
+
+/** Spalte eines Blocks: Deckung dahinter, Inhalt davor blendet beim Scrollen ein. */
+function Spalte({
+  className,
+  children,
+}: {
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className={`relative ${className ?? ""}`}>
+      <Deckung />
+      <div className="reveal">{children}</div>
+    </div>
+  );
+}
 
 function Rahmen({
   projekt,
@@ -31,32 +64,9 @@ function Rahmen({
   );
 }
 
-/*
- * Dunkle Flaeche mit weichem Rand hinter Fliesstext. Der Code bleibt in den
- * freien Bereichen voll sichtbar und wird nur dort abgedunkelt, wo gelesen wird.
- */
-const FLAECHE = `radial-gradient(
-  ellipse at center,
-  rgb(5 7 10 / 0.96) 0%,
-  rgb(5 7 10 / 0.9) 45%,
-  rgb(5 7 10 / 0.6) 68%,
-  rgb(5 7 10 / 0) 82%
-)`;
-
-function Dunkelflaeche() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10"
-      style={{ background: FLAECHE }}
-    />
-  );
-}
-
 function Text({ projekt }: { projekt: Projekt }) {
   return (
-    <div className={`relative ${projekt.breit ? "max-w-3xl" : ""}`}>
-      <Dunkelflaeche />
+    <>
       <p className="text-sm tracking-[0.18em] text-muted uppercase">
         {projekt.untertitel}
       </p>
@@ -76,7 +86,7 @@ function Text({ projekt }: { projekt: Projekt }) {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }
 
@@ -103,38 +113,47 @@ export function Projekte() {
       <CodeHintergrund />
 
       {/* Typografie wie im Hero, jeweils eine Stufe kleiner */}
-      <header className="reveal relative mb-20 max-w-3xl md:mb-32">
-        <Dunkelflaeche />
-        <p className="text-sm tracking-[0.18em] text-muted uppercase">
-          Ausgewählte Arbeiten
-        </p>
-        <h2 className="mt-4 text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.03em] text-balance leading-[1.08]">
-          Projekte, die im Betrieb stehen.
-        </h2>
-        <p className="mt-6 max-w-[54ch] text-[clamp(0.95rem,1.4vw,1.15rem)] text-pretty text-muted leading-relaxed">
-          Alle hier gezeigten Systeme habe ich konzipiert, entwickelt und in
-          Betrieb genommen. Keine Prototypen, sondern Anwendungen, auf die
-          täglich Menschen und Geschäftsprozesse angewiesen sind.
-        </p>
+      <header className="mb-20 md:mb-32">
+        <Spalte className="max-w-3xl">
+          <p className="text-sm tracking-[0.18em] text-muted uppercase">
+            Ausgewählte Arbeiten
+          </p>
+          <h2 className="mt-4 text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.03em] text-balance leading-[1.08]">
+            Projekte, die im Betrieb stehen.
+          </h2>
+          <p className="mt-6 max-w-[54ch] text-[clamp(0.95rem,1.4vw,1.15rem)] text-pretty text-muted leading-relaxed">
+            Alle hier gezeigten Systeme habe ich konzipiert, entwickelt und in
+            Betrieb genommen. Keine Prototypen, sondern Anwendungen, auf die
+            täglich Menschen und Geschäftsprozesse angewiesen sind.
+          </p>
+        </Spalte>
       </header>
 
       <div className="flex flex-col gap-24 md:gap-36">
         {PROJEKTE.map((projekt) =>
           projekt.breit ? (
-            <article key={projekt.slug} className="reveal flex flex-col gap-8">
-              <Rahmen projekt={projekt} sizes={SIZES_VOLL} />
-              <Text projekt={projekt} />
+            <article key={projekt.slug} className="flex flex-col gap-8">
+              <Spalte>
+                <Rahmen projekt={projekt} sizes={SIZES_VOLL} />
+              </Spalte>
+              <Spalte className="max-w-3xl">
+                <Text projekt={projekt} />
+              </Spalte>
             </article>
           ) : (
             <article
               key={projekt.slug}
-              className="reveal grid gap-8 md:grid-cols-2 md:items-center md:gap-14"
+              className="grid gap-8 md:grid-cols-2 md:items-center md:gap-14"
             >
               {/* Ab md wechselt die Bildspalte die Seite, gestapelt steht das Bild immer oben. */}
-              <div className={BILD_RECHTS.get(projekt.slug) ? "md:order-2" : undefined}>
+              <Spalte
+                className={BILD_RECHTS.get(projekt.slug) ? "md:order-2" : undefined}
+              >
                 <Rahmen projekt={projekt} sizes={SIZES_HALB} />
-              </div>
-              <Text projekt={projekt} />
+              </Spalte>
+              <Spalte>
+                <Text projekt={projekt} />
+              </Spalte>
             </article>
           ),
         )}
