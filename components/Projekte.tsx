@@ -76,7 +76,20 @@ export function Projekte() {
       id="projekte"
       className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-12 md:px-24 md:py-32"
     >
-      <h2 className="sr-only">Projekte</h2>
+      {/* Typografie wie im Hero, jeweils eine Stufe kleiner */}
+      <header className="reveal mb-20 max-w-3xl md:mb-32">
+        <p className="text-sm tracking-[0.18em] text-muted uppercase">
+          Ausgewählte Arbeiten
+        </p>
+        <h2 className="mt-4 text-[clamp(2rem,5vw,4rem)] font-bold tracking-[-0.03em] text-balance leading-[1.08]">
+          Projekte, die im Betrieb stehen.
+        </h2>
+        <p className="mt-6 max-w-[54ch] text-[clamp(0.95rem,1.4vw,1.15rem)] text-pretty text-muted leading-relaxed">
+          Alle hier gezeigten Systeme habe ich konzipiert, entwickelt und in
+          Betrieb genommen. Keine Prototypen, sondern Anwendungen, auf die
+          täglich Menschen und Geschäftsprozesse angewiesen sind.
+        </p>
+      </header>
 
       <div className="flex flex-col gap-24 md:gap-36">
         {PROJEKTE.map((projekt) =>
