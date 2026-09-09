@@ -31,9 +31,32 @@ function Rahmen({
   );
 }
 
+/*
+ * Dunkle Flaeche mit weichem Rand hinter Fliesstext. Der Code bleibt in den
+ * freien Bereichen voll sichtbar und wird nur dort abgedunkelt, wo gelesen wird.
+ */
+const FLAECHE = `radial-gradient(
+  ellipse at center,
+  rgb(5 7 10 / 0.96) 0%,
+  rgb(5 7 10 / 0.9) 45%,
+  rgb(5 7 10 / 0.6) 68%,
+  rgb(5 7 10 / 0) 82%
+)`;
+
+function Dunkelflaeche() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10"
+      style={{ background: FLAECHE }}
+    />
+  );
+}
+
 function Text({ projekt }: { projekt: Projekt }) {
   return (
-    <div className={projekt.breit ? "max-w-3xl" : undefined}>
+    <div className={`relative ${projekt.breit ? "max-w-3xl" : ""}`}>
+      <Dunkelflaeche />
       <p className="text-sm tracking-[0.18em] text-muted uppercase">
         {projekt.untertitel}
       </p>
@@ -80,7 +103,8 @@ export function Projekte() {
       <CodeHintergrund />
 
       {/* Typografie wie im Hero, jeweils eine Stufe kleiner */}
-      <header className="reveal mb-20 max-w-3xl md:mb-32">
+      <header className="reveal relative mb-20 max-w-3xl md:mb-32">
+        <Dunkelflaeche />
         <p className="text-sm tracking-[0.18em] text-muted uppercase">
           Ausgewählte Arbeiten
         </p>

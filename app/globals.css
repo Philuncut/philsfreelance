@@ -59,22 +59,19 @@ body {
   font-synthesis-weight: none;
 }
 
-@keyframes code-lauf {
-  from {
-    transform: translate3d(0, 0, 0);
+@keyframes code-cursor {
+  0%,
+  49% {
+    opacity: 1;
   }
-  to {
-    transform: translate3d(0, -50%, 0);
+  50%,
+  100% {
+    opacity: 0;
   }
 }
 
-.code-lauf {
-  animation: code-lauf 120s linear infinite;
-}
-
-/* Der Beobachter setzt das Attribut, sobald die Sektion das Sichtfeld verlaesst. */
-.code-lauf[data-laeuft="false"] {
-  animation-play-state: paused;
+.code-cursor {
+  animation: code-cursor 1.06s step-end infinite;
 }
 
 /*
@@ -99,8 +96,8 @@ body {
     scroll-behavior: auto !important;
   }
 
-  /* Der Code steht still und bleibt als statischer Hintergrund stehen. */
-  .code-lauf {
+  /* Der Cursor blinkt nicht, der Code steht fertig da. */
+  .code-cursor {
     animation: none;
   }
 
