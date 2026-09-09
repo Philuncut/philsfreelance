@@ -32,8 +32,10 @@ export function Hero() {
       {/*
         Eigene Kopfzeile ueber dem Bild. Sie steht ausserhalb des Bildcontainers
         und damit ausserhalb des Heranfahrens: die Wortmarke bleibt still,
-        waehrend das Bild hinter ihr skaliert. Seitlich auf denselben Raendern
-        wie die Headline darunter, damit beide auf einer Kante sitzen.
+        waehrend das Bild hinter ihr skaliert. Sie sitzt rechts oben ueber dem
+        Bildschirm im Foto, auf denselben Raendern wie das uebrige Layout.
+        ml-auto statt einer eigenen Ausrichtung: das Bild ist als Blockelement
+        gesetzt und schiebt sich damit an die rechte Kante des Innenabstands.
       */}
       <header className="absolute inset-x-0 top-0 z-10">
         {/* Traegt die Wortmarke auf jedem Untergrund, auch auf hellen Stellen des Fotos */}
@@ -55,7 +57,7 @@ export function Hero() {
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
             sizes="(min-width: 1210px) 620px, (min-width: 768px) 520px, 280px"
-            className="animate-signature h-auto w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
+            className="animate-signature ml-auto h-auto w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
           />
         </div>
       </header>
