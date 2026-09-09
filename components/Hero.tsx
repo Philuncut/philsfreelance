@@ -2,6 +2,25 @@ import Image from "next/image";
 import heroImage from "@/public/hero.png";
 import unterschrift from "@/public/unterschrift.png";
 
+/*
+ * Schleier der Kopfzeile, unabhaengig vom Verlauf des Hero-Bildes. Er folgt
+ * einem Smoothstep: oben eine Weile fast unveraendert, damit die Wortmarke
+ * durchgehend Halt hat, und am Ende mit Steigung null auslaufend, damit keine
+ * Kante stehen bleibt.
+ */
+const KOPF_VERLAUF = `linear-gradient(
+    to bottom,
+    rgb(5 7 10 / 0.45) 0%,
+    rgb(5 7 10 / 0.44) 9%,
+    rgb(5 7 10 / 0.408) 19%,
+    rgb(5 7 10 / 0.347) 31%,
+    rgb(5 7 10 / 0.22) 51%,
+    rgb(5 7 10 / 0.1) 69%,
+    rgb(5 7 10 / 0.04) 82%,
+    rgb(5 7 10 / 0.009) 91%,
+    rgb(5 7 10 / 0) 100%
+  )`;
+
 /**
  * Zwei Layouts, ein DOM:
  * - unter 768px zweigeteilt, Bild oben, Text darunter auf dunklem Grund
@@ -10,6 +29,30 @@ import unterschrift from "@/public/unterschrift.png";
 export function Hero() {
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-background">
+      {/*
+        Eigene Kopfzeile ueber dem Bild. Sie steht ausserhalb des Bildcontainers
+        und damit ausserhalb des Heranfahrens: die Wortmarke bleibt still,
+        waehrend das Bild hinter ihr skaliert. Seitlich auf denselben Raendern
+        wie die Headline darunter, damit beide auf einer Kante sitzen.
+      */}
+      <header className="absolute inset-x-0 top-0 z-10">
+        {/* Traegt die Wortmarke auf jedem Untergrund, auch auf hellen Stellen des Fotos */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-[clamp(250px,34svh,420px)]"
+          style={{ background: KOPF_VERLAUF }}
+        />
+
+        <div className="relative px-6 pt-8 sm:px-12 md:px-24 md:pt-12">
+          <Image
+            src={unterschrift}
+            alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
+            sizes="(min-width: 768px) 340px, 200px"
+            className="animate-signature h-auto w-[clamp(200px,44.3vw,340px)] [animation-delay:300ms]"
+          />
+        </div>
+      </header>
+
       {/* Bildbereich: mobil obere Bildschirmhälfte, ab md vollflächig hinter dem Text */}
       {/* overflow-hidden faengt die 6 Prozent Ueberstand des Heranfahrens ab */}
       <div className="relative -z-20 h-[48svh] w-full shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto">
@@ -56,28 +99,6 @@ export function Hero() {
             linear-gradient(to right, rgb(5 7 10 / 0.55), rgb(5 7 10 / 0) 65%)
           `,
         }}
-      />
-
-      {/*
-        Unterschrift oben rechts, auf denselben Randabständen wie der Textblock
-        darunter. Der Abstand nach oben steht in svh statt in Pixeln: so sitzt
-        sie auf jedem Gerät im oberen Drittel, bleibt auf dem Handy weit unter
-        der Statusleiste und deutlich über der Kante bei 48svh, an der das Bild
-        in den dunklen Textbereich übergeht.
-
-        clamp(120px, 26vw, 200px): 120 auf dem Handy, ab 768px die vollen 200.
-        Die Deckkraft steckt in der Animation, nicht in einer eigenen Klasse,
-        sonst überschriebe die Animation sie wieder.
-      */}
-      <Image
-        src={unterschrift}
-        alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
-        sizes="(min-width: 768px) 200px, 120px"
-        className="
-          animate-signature absolute top-[14svh] right-6 h-auto
-          w-[clamp(120px,26vw,200px)] [animation-delay:1100ms]
-          sm:right-12 md:top-[16svh] md:right-24
-        "
       />
 
       {/*
