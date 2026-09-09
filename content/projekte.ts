@@ -28,8 +28,9 @@ export const PROJEKTE: Projekt[] = [
     slug: "phils",
     titel: "phils.at",
     untertitel: "Restaurant-Website mit Bestellsystem",
-    beschreibung: PLATZHALTER,
-    technologien: ["Next.js", "React", "TypeScript", "Stripe"],
+    beschreibung:
+      "Website und Bestellsystem für ein Restaurant in Innsbruck. Gäste bestellen zum Abholen, zur Lieferung oder direkt am Tisch über einen QR-Code, der den Tisch automatisch zuordnet, Nachbestellungen laufen über dieselbe Sitzung und bezahlt wird über Stripe. Bons gehen getrennt an Küche und Bar, Öffnungszeiten, Ruhetage und Saisonwechsel steuert die Datenbank selbst, und das Personal arbeitet über eine eigene Tablet-App.",
+    technologien: ["Next.js", "React", "TypeScript", "PostgreSQL", "Stripe"],
     bild: phils,
     alt: "Startseite von phils.at mit Speisekarte und Bestellfunktion",
   },
