@@ -35,8 +35,15 @@ const ABSAETZE = [
 export function UeberMich() {
   return (
     <section id="ueber-mich" className="bg-background">
-      {/* overflow-hidden faengt die 6 Prozent Ueberstand des Heranfahrens ab */}
-      <div className="relative h-[60svh] w-full overflow-hidden md:h-[75svh]">
+      {/*
+        overflow-hidden faengt die 6 Prozent Ueberstand des Heranfahrens ab.
+        Ab 3xl, also 2000px, greift eine Klammer: je flacher das Fenster im
+        Verhaeltnis zur Breite, desto weniger vom Bild bliebe senkrecht uebrig,
+        bis die Oberkante die Gesichter auf Augenhoehe abschneidet. 35vw haelt
+        rund die halbe Bildhoehe im Rahmen, 75svh bleibt die Untergrenze,
+        92svh die Obergrenze, damit das Banner nie den Schirm ausfuellt.
+      */}
+      <div className="slow-zoom-frame relative h-[60svh] w-full overflow-hidden md:h-[75svh] 3xl:h-[clamp(75svh,35vw,92svh)]">
         {/*
           object-position 50% top. Das Foto ist 3:2, im breiten Banner sind
           senkrecht nur rund zwei Drittel davon zu sehen. Die Drohne haengt im
@@ -45,7 +52,8 @@ export function UeberMich() {
           Waagrecht mittig: auf einem Handy bleiben damit sowohl die Drohne
           links als auch die Person mit der Fernsteuerung rechts im Bild.
           origin-top sorgt dafuer, dass auch das Heranfahren die Oberkante
-          stehen laesst und nur nach unten hin auslaeuft.
+          stehen laesst und nur nach unten hin auslaeuft. slow-zoom haengt am
+          Scrollstand statt an der Uhr, siehe globals.css.
         */}
         <Image
           src={foto}
@@ -53,7 +61,7 @@ export function UeberMich() {
           fill
           sizes="100vw"
           placeholder="blur"
-          className="animate-slow-zoom origin-top object-cover object-[50%_top]"
+          className="slow-zoom origin-top object-cover object-[50%_top]"
         />
 
         <div

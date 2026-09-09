@@ -8,6 +8,16 @@
   --hairline: rgb(242 244 247 / 0.42);
 }
 
+/*
+ * Eigener Breakpoint fuer sehr breite Schirme. Als Variante min-[2000px]
+ * geschrieben sortiert Tailwind die Regel vor sm und md ein, wo sie von
+ * md wieder ueberschrieben wird; als registrierter Breakpoint landet sie
+ * der Breite nach an der richtigen Stelle.
+ */
+@theme {
+  --breakpoint-3xl: 125rem; /* 2000px, in rem wie die eingebauten Breakpoints */
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -21,8 +31,6 @@
   --animate-hero-image: hero-fade 1200ms var(--ease-hero) both,
     hero-zoom 8000ms var(--ease-hero) both;
   --animate-hero-rise: hero-rise 900ms var(--ease-hero) both;
-  /* Dasselbe Heranfahren wie im Hero, ohne das Aufblenden */
-  --animate-slow-zoom: hero-zoom 8000ms var(--ease-hero) both;
 }
 
 /* Nur Deckkraft und Transform werden animiert: kein Umbruch, kein Zappeln. */
@@ -89,6 +97,35 @@ body {
       animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 15% cover 35%;
+    }
+
+    /*
+     * Dasselbe Heranfahren wie im Hero, nur vom Scrollstand getrieben statt
+     * von der Uhr. Zeitgesteuert waere es sinnlos: die Sektion liegt weit
+     * unten, die acht Sekunden waeren abgelaufen, bevor man sie sieht.
+     * Die Bewegung laeuft, waehrend das Bild hereinkommt, und steht spaetestens
+     * bei halb gefuelltem Bildschirm auf Originalgroesse.
+     * Ohne Scroll-Timeline bleibt das Bild schlicht unbewegt und unskaliert.
+     *
+     * Warum ueber einen benannten Zeitstrahl und nicht ueber view(): view()
+     * sucht den naechsten Scroll-Container ueber dem Element. Das Bild liegt in
+     * einem Rahmen mit overflow-hidden, und der zaehlt als Scroll-Container.
+     * Der Zeitstrahl haenge dann an einem Kasten, der sich nie bewegt, und
+     * stuende still. Benannt am Rahmen selbst greift er dagegen auf das
+     * Dokument zu, also auf den echten Scrollstand.
+     */
+    .slow-zoom-frame {
+      view-timeline-name: --slow-zoom;
+      view-timeline-axis: block;
+    }
+
+    .slow-zoom {
+      animation-name: hero-zoom;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --slow-zoom;
+      animation-range: entry 0% cover 50%;
     }
   }
 }

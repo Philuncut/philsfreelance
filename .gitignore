@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# lokale Dateien, gehoeren nicht ins Repository
+/world4youdomain security pin.txt
+/phils_film.jpg
