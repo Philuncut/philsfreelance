@@ -59,6 +59,24 @@ body {
   font-synthesis-weight: none;
 }
 
+@keyframes code-lauf {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.code-lauf {
+  animation: code-lauf 120s linear infinite;
+}
+
+/* Der Beobachter setzt das Attribut, sobald die Sektion das Sichtfeld verlaesst. */
+.code-lauf[data-laeuft="false"] {
+  animation-play-state: paused;
+}
+
 /*
  * Einblenden beim Scrollen ueber eine CSS-Scroll-Timeline, ohne Client-JavaScript.
  * Browser ohne Unterstuetzung zeigen die Bloecke einfach sofort und vollstaendig.
@@ -79,6 +97,11 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
+  }
+
+  /* Der Code steht still und bleibt als statischer Hintergrund stehen. */
+  .code-lauf {
+    animation: none;
   }
 
   *,

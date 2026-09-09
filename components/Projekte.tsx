@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { CodeHintergrund } from "@/components/CodeHintergrund";
 import { PROJEKTE, type Projekt } from "@/content/projekte";
 
 /** Breite der Bildspalte, damit next/image nicht zu grosse Dateien ausliefert. */
@@ -74,8 +75,10 @@ export function Projekte() {
   return (
     <section
       id="projekte"
-      className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-12 md:px-24 md:py-32"
+      className="relative isolate mx-auto w-full max-w-7xl px-6 py-24 sm:px-12 md:px-24 md:py-32"
     >
+      <CodeHintergrund />
+
       {/* Typografie wie im Hero, jeweils eine Stufe kleiner */}
       <header className="reveal mb-20 max-w-3xl md:mb-32">
         <p className="text-sm tracking-[0.18em] text-muted uppercase">
