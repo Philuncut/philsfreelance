@@ -34,8 +34,12 @@ export function Hero() {
         und damit ausserhalb des Heranfahrens: die Wortmarke bleibt still,
         waehrend das Bild hinter ihr skaliert. Sie sitzt rechts oben ueber dem
         Bildschirm im Foto, auf denselben Raendern wie das uebrige Layout.
-        ml-auto statt einer eigenen Ausrichtung: das Bild ist als Blockelement
-        gesetzt und schiebt sich damit an die rechte Kante des Innenabstands.
+        Ab md haengt die linke Kante an 42vw statt am rechten Rand: der
+        Bildausschnitt verschiebt sich mit der Fensterbreite, ein fester
+        rechter Abstand schoebe die Marke sonst auf die Haftnotizen an der
+        Wand. Deshalb dort auch kein seitlicher Innenabstand, sonst kaeme er
+        zu den 42 Prozent hinzu. Unter md bleibt sie rechtsbuendig, 42 Prozent
+        plus ihre Breite waeren auf dem Handy breiter als der Schirm.
       */}
       <header className="absolute inset-x-0 top-0 z-10">
         {/* Traegt die Wortmarke auf jedem Untergrund, auch auf hellen Stellen des Fotos */}
@@ -52,12 +56,12 @@ export function Hero() {
           max-w-full faengt Geraete unter 380px ab, wo die 280 Pixel plus
           Raender breiter waeren als der Schirm.
         */}
-        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-24 md:pt-[clamp(48px,4.9vw,71px)]">
+        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-0 md:pt-[clamp(48px,4.9vw,71px)]">
           <Image
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
             sizes="(min-width: 1210px) 620px, (min-width: 768px) 520px, 280px"
-            className="animate-signature ml-auto h-auto w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
+            className="animate-signature ml-auto h-auto md:ml-[42vw] w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
           />
         </div>
       </header>
