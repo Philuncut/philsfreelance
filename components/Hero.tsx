@@ -34,11 +34,11 @@ export function Hero() {
         und damit ausserhalb des Heranfahrens: die Wortmarke bleibt still,
         waehrend das Bild hinter ihr skaliert. Sie sitzt rechts oben ueber dem
         Bildschirm im Foto, auf denselben Raendern wie das uebrige Layout.
-        Ab md haengt die linke Kante an 42vw statt am rechten Rand: der
+        Ab md haengt die linke Kante an 38vw statt am rechten Rand: der
         Bildausschnitt verschiebt sich mit der Fensterbreite, ein fester
         rechter Abstand schoebe die Marke sonst auf die Haftnotizen an der
         Wand. Deshalb dort auch kein seitlicher Innenabstand, sonst kaeme er
-        zu den 42 Prozent hinzu. Unter md bleibt sie rechtsbuendig, 42 Prozent
+        zu den 38 Prozent hinzu. Unter md bleibt sie rechtsbuendig, 38 Prozent
         plus ihre Breite waeren auf dem Handy breiter als der Schirm.
       */}
       <header className="absolute inset-x-0 top-0 z-10">
@@ -61,7 +61,7 @@ export function Hero() {
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
             sizes="(min-width: 1210px) 620px, (min-width: 768px) 520px, 280px"
-            className="animate-signature ml-auto h-auto md:ml-[42vw] w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
+            className="animate-signature ml-auto h-auto md:ml-[38vw] w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
           />
         </div>
       </header>
