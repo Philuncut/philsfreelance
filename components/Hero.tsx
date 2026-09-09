@@ -50,13 +50,16 @@ export function Hero() {
         />
 
         {/*
-          Breite und Abstand nach oben wachsen mit derselben Steigung: 8,2 zu
-          72 unter md und 4,9 zu 43 darueber sind jeweils 11,4 Prozent, der
-          Abstand bleibt also im gleichen Verhaeltnis zur Wortmarke.
+          Die Breite waechst mit 72vw unter md und 43vw darueber. Der Abstand
+          nach oben lief mit 8,2 und 4,9 im selben Verhaeltnis mit, ist ab md
+          aber um 40 Pixel gekuerzt: die Wortmarke sitzt dort hoeher.
+          Die Untergrenze von 20 Pixeln faengt das untere Ende ab, wo
+          4,9vw minus 40 sonst gegen null liefe. Unter md unveraendert.
+
           max-w-full faengt Geraete unter 380px ab, wo die 280 Pixel plus
           Raender breiter waeren als der Schirm.
         */}
-        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-0 md:pt-[clamp(48px,4.9vw,71px)]">
+        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-0 md:pt-[clamp(20px,4.9vw_-_40px,31px)]">
           <Image
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
