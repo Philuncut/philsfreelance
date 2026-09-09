@@ -56,6 +56,20 @@ function Text({ projekt }: { projekt: Projekt }) {
   );
 }
 
+/*
+ * Der breite Block steht mitten in der Reihe und hat keine Bildspalte.
+ * Der Wechsel links/rechts zaehlt deshalb nur die zweispaltigen Bloecke,
+ * sonst stuenden zwei Bilder hintereinander auf derselben Seite.
+ */
+const BILD_RECHTS = new Map<string, boolean>();
+let zweispaltig = 0;
+for (const projekt of PROJEKTE) {
+  if (!projekt.breit) {
+    BILD_RECHTS.set(projekt.slug, zweispaltig % 2 === 1);
+    zweispaltig += 1;
+  }
+}
+
 export function Projekte() {
   return (
     <section
@@ -65,7 +79,7 @@ export function Projekte() {
       <h2 className="sr-only">Projekte</h2>
 
       <div className="flex flex-col gap-24 md:gap-36">
-        {PROJEKTE.map((projekt, index) =>
+        {PROJEKTE.map((projekt) =>
           projekt.breit ? (
             <article key={projekt.slug} className="reveal flex flex-col gap-8">
               <Rahmen projekt={projekt} sizes={SIZES_VOLL} />
@@ -77,7 +91,7 @@ export function Projekte() {
               className="reveal grid gap-8 md:grid-cols-2 md:items-center md:gap-14"
             >
               {/* Ab md wechselt die Bildspalte die Seite, gestapelt steht das Bild immer oben. */}
-              <div className={index % 2 === 1 ? "md:order-2" : undefined}>
+              <div className={BILD_RECHTS.get(projekt.slug) ? "md:order-2" : undefined}>
                 <Rahmen projekt={projekt} sizes={SIZES_HALB} />
               </div>
               <Text projekt={projekt} />
