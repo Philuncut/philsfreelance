@@ -104,6 +104,51 @@ for (const projekt of PROJEKTE) {
   }
 }
 
+/*
+ * Zwei Projekte stehen offen, der Rest liegt hinter dem Aufklapper. Bewusst
+ * ueber die Slugs und nicht ueber die ersten beiden Eintraege: so aendert ein
+ * Umsortieren in projekte.ts nicht stillschweigend, was sichtbar ist.
+ */
+const OFFEN = new Set(["phils", "uncuttv-app"]);
+const SICHTBAR = PROJEKTE.filter((projekt) => OFFEN.has(projekt.slug));
+const WEITERE = PROJEKTE.filter((projekt) => !OFFEN.has(projekt.slug));
+
+const REIHE = "flex flex-col gap-24 md:gap-36";
+
+/** Ein Projektblock: breit einspaltig, sonst zweispaltig mit wechselnder Seite. */
+function Block({ projekt }: { projekt: Projekt }) {
+  if (projekt.breit) {
+    return (
+      <article className="flex flex-col gap-8">
+        <Spalte>
+          <Rahmen projekt={projekt} sizes={SIZES_VOLL} />
+        </Spalte>
+        <Spalte className="max-w-3xl">
+          <Text projekt={projekt} />
+        </Spalte>
+      </article>
+    );
+  }
+
+  return (
+    <article
+      // Breiter Spaltenabstand: die weichen Raender der beiden Deckungen
+      // brauchen je rund 24px, dazwischen soll Code sichtbar bleiben.
+      className="grid gap-8 md:grid-cols-2 md:items-center md:gap-24"
+    >
+      {/* Ab md wechselt die Bildspalte die Seite, gestapelt steht das Bild immer oben. */}
+      <Spalte
+        className={BILD_RECHTS.get(projekt.slug) ? "md:order-2" : undefined}
+      >
+        <Rahmen projekt={projekt} sizes={SIZES_HALB} />
+      </Spalte>
+      <Spalte>
+        <Text projekt={projekt} />
+      </Spalte>
+    </article>
+  );
+}
+
 export function Projekte() {
   return (
     <section
@@ -129,37 +174,40 @@ export function Projekte() {
         </Spalte>
       </header>
 
-      <div className="flex flex-col gap-24 md:gap-36">
-        {PROJEKTE.map((projekt) =>
-          projekt.breit ? (
-            <article key={projekt.slug} className="flex flex-col gap-8">
-              <Spalte>
-                <Rahmen projekt={projekt} sizes={SIZES_VOLL} />
-              </Spalte>
-              <Spalte className="max-w-3xl">
-                <Text projekt={projekt} />
-              </Spalte>
-            </article>
-          ) : (
-            <article
-              key={projekt.slug}
-              // Breiter Spaltenabstand: die weichen Raender der beiden Deckungen
-              // brauchen je rund 24px, dazwischen soll Code sichtbar bleiben.
-              className="grid gap-8 md:grid-cols-2 md:items-center md:gap-24"
-            >
-              {/* Ab md wechselt die Bildspalte die Seite, gestapelt steht das Bild immer oben. */}
-              <Spalte
-                className={BILD_RECHTS.get(projekt.slug) ? "md:order-2" : undefined}
-              >
-                <Rahmen projekt={projekt} sizes={SIZES_HALB} />
-              </Spalte>
-              <Spalte>
-                <Text projekt={projekt} />
-              </Spalte>
-            </article>
-          ),
-        )}
+      <div className={REIHE}>
+        {SICHTBAR.map((projekt) => (
+          <Block key={projekt.slug} projekt={projekt} />
+        ))}
       </div>
+
+      {/*
+        Aufklapper ohne Client-JavaScript. details/summary bringt den Zustand
+        selbst mit; group-open schaltet die beiden Beschriftungen um.
+        list-none und der WebKit-Selektor nehmen das Dreieck weg, das Browser
+        sonst vor die Zusammenfassung setzen.
+      */}
+      <details className="group mt-24 md:mt-36">
+        <summary
+          className="
+            relative mx-auto flex w-fit cursor-pointer list-none items-center
+            justify-center rounded-sm border border-[var(--hairline)] px-8 py-3
+            min-h-12 font-semibold tracking-[0.03em] text-foreground select-none
+            transition-colors duration-200 hover:border-foreground hover:bg-white/8
+            focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent
+            [&::-webkit-details-marker]:hidden
+          "
+        >
+          <Deckung />
+          <span className="group-open:hidden">Weitere Projekte ansehen</span>
+          <span className="hidden group-open:inline">Weniger anzeigen</span>
+        </summary>
+
+        <div className={`mt-24 md:mt-36 ${REIHE}`}>
+          {WEITERE.map((projekt) => (
+            <Block key={projekt.slug} projekt={projekt} />
+          ))}
+        </div>
+      </details>
     </section>
   );
 }

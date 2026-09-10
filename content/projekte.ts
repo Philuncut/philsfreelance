@@ -19,10 +19,6 @@ export type Projekt = {
   breit?: boolean;
 };
 
-// PLATZHALTER: beschreibung und technologien werden noch ersetzt.
-const PLATZHALTER =
-  "Platzhalter. Hier stehen zwei bis drei Sätze zum Projekt: worum es ging, was gebaut wurde und woran die Arbeit gemessen wurde. Der Text folgt.";
-
 export const PROJEKTE: Projekt[] = [
   {
     slug: "phils",
@@ -38,7 +34,8 @@ export const PROJEKTE: Projekt[] = [
     slug: "uncuttv-app",
     titel: "uncuttv.app",
     untertitel: "Streaming-Plattform",
-    beschreibung: PLATZHALTER,
+    beschreibung:
+      "Streaming-Plattform mit Abo, Altersverifikation und Geoblocking, dazu Apps für Android, Fire TV und LG webOS. Rechteinhaber reichen ihre Filme über ein eigenes Portal ein und werden monatlich nach tatsächlicher Wiedergabezeit ausgezahlt. Die Abrechnung läuft über ein Journal, das jede Sitzung nachvollziehbar festhält.",
     technologien: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL"],
     bild: uncuttvApp,
     alt: "Filmdetailseite der Streaming-Plattform uncuttv.app mit Abspielen-Schaltfläche und Beschreibung",
@@ -47,7 +44,8 @@ export const PROJEKTE: Projekt[] = [
     slug: "dubtrix",
     titel: "Dubtrix",
     untertitel: "ADR-Software",
-    beschreibung: PLATZHALTER,
+    beschreibung:
+      "Werkzeug für Synchronstudios. Bild, laufendes Rythmoband und Regieansicht liegen auf getrennten Bildschirmen und bleiben über Stunden frame-genau zusammen. Die Kopplung an die Audio-Workstation läuft über ein eigenes VST3-Plugin. Ein Dialogbuch, das früher vier Tage Handarbeit war, ist jetzt in einer Viertelstunde zugeordnet.",
     technologien: ["Electron", "TypeScript", "Cubase MMC", "Timecode"],
     bild: dubtrix,
     alt: "Dubtrix neben der Schnittsoftware, mit Timecode, Cue-Verwaltung und Dialogbuch",
