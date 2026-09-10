@@ -67,7 +67,7 @@ export function Hero() {
         <div className="relative px-6 pt-[34.5svh] sm:px-12 md:px-0 md:pt-[clamp(20px,4.9vw_-_40px,31px)]">
           <Image
             src={unterschrift}
-            alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
+            alt="Philipp Gasser, Full-Stack-Entwickler, Tirol"
             sizes="(min-width: 1210px) 620px, (min-width: 768px) 520px, 280px"
             className="animate-signature ml-auto h-auto md:ml-[calc(38vw_+_40px)] w-[clamp(280px,72vw,520px)] max-w-full [animation-delay:300ms] md:w-[clamp(520px,43vw,620px)]"
           />
@@ -138,7 +138,7 @@ export function Hero() {
 
         <div className="mt-10 flex flex-wrap gap-4 animate-hero-rise [animation-delay:400ms]">
           <a
-            href="mailto:office@uncuttv.at"
+            href="#kontakt"
             className="
               inline-flex min-h-12 items-center justify-center rounded-sm border border-transparent
               bg-accent px-8 py-3 font-semibold tracking-[0.03em] text-background
