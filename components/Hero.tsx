@@ -50,16 +50,21 @@ export function Hero() {
         />
 
         {/*
-          Die Breite waechst mit 72vw unter md und 43vw darueber. Der Abstand
-          nach oben lief mit 8,2 und 4,9 im selben Verhaeltnis mit, ist ab md
-          aber um 40 Pixel gekuerzt: die Wortmarke sitzt dort hoeher.
-          Die Untergrenze von 20 Pixeln faengt das untere Ende ab, wo
-          4,9vw minus 40 sonst gegen null liefe. Unter md unveraendert.
+          Die Breite waechst mit 72vw unter md und 43vw darueber.
+
+          Der Abstand nach oben trennt die beiden Layouts: unter md sitzt die
+          Wortmarke bei 34,5svh, also bei 72 Prozent des 48svh hohen
+          Bildbereichs. Oben laege sie dort ueber dem Gesicht, unten liegt sie
+          auf der dunklen Tischflaeche. Der Wert haengt an svh und nicht an
+          Pixeln, damit er dem Bildbereich folgt.
+
+          Ab md ist der Abstand um 40 Pixel gekuerzt, die Untergrenze von 20
+          Pixeln faengt das untere Ende ab, wo 4,9vw minus 40 gegen null liefe.
 
           max-w-full faengt Geraete unter 380px ab, wo die 280 Pixel plus
           Raender breiter waeren als der Schirm.
         */}
-        <div className="relative px-6 pt-[clamp(32px,8.2vw,48px)] sm:px-12 md:px-0 md:pt-[clamp(20px,4.9vw_-_40px,31px)]">
+        <div className="relative px-6 pt-[34.5svh] sm:px-12 md:px-0 md:pt-[clamp(20px,4.9vw_-_40px,31px)]">
           <Image
             src={unterschrift}
             alt="Philipp Gassner, Full-Stack-Entwickler, Tirol"
