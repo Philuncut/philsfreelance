@@ -9,19 +9,6 @@ export const metadata: Metadata = {
     "Offenlegung nach § 5 E-Commerce-Gesetz und § 25 Mediengesetz.",
 };
 
-/**
- * Noch offene Angabe. Bewusst sichtbar und nicht als stiller Leerraum: ein
- * Impressum mit unbemerkter Luecke ist schlechter als eines, dem man die
- * Luecke ansieht.
- */
-function Platzhalter({ children }: { children: ReactNode }) {
-  return (
-    <span className="rounded-sm bg-[#ff9d9d]/12 px-2 py-0.5 font-semibold text-[#ff9d9d]">
-      PLATZHALTER: {children}
-    </span>
-  );
-}
-
 function Block({ titel, children }: { titel: string; children: ReactNode }) {
   return (
     <section className="border-t border-[var(--hairline)]/30 pt-8">
@@ -60,22 +47,14 @@ export default function Impressum() {
           <div className="mt-16 space-y-12 text-muted">
             <Block titel="Medieninhaber und Diensteanbieter">
               <p className="text-foreground">UncutTV GmbH</p>
-              <p>
-                <Platzhalter>Straße und Hausnummer</Platzhalter>
-              </p>
-              <p>
-                <Platzhalter>Postleitzahl</Platzhalter> Axams, Österreich
-              </p>
+              <p>Kalchgruben 4/11</p>
+              <p>6094 Axams, Österreich</p>
               <p>Rechtsform: Gesellschaft mit beschränkter Haftung (GmbH)</p>
             </Block>
 
             <Block titel="Firmenbuch">
-              <p>
-                Firmenbuchnummer: <Platzhalter>FN-Nummer</Platzhalter>
-              </p>
-              <p>
-                Firmenbuchgericht: <Platzhalter>zuständiges Gericht</Platzhalter>
-              </p>
+              <p>Firmenbuchnummer: FN 643542 k</p>
+              <p>Firmenbuchgericht: Landesgericht Innsbruck</p>
               <p>Umsatzsteuer-Identifikationsnummer: ATU 81526957</p>
             </Block>
 
