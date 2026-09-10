@@ -80,36 +80,33 @@ export default function Impressum() {
             </Block>
 
             <Block titel="Vertretungsbefugtes Organ">
-              <p>Geschäftsführer: Philipp Gasser</p>
+              <p>Geschäftsführer: Florian Schütz und Philipp Gasser</p>
             </Block>
 
             <Block titel="Unternehmensgegenstand">
               <p>
-                <Platzhalter>
-                  Unternehmensgegenstand laut Firmenbuch beziehungsweise
-                  Gewerbeschein
-                </Platzhalter>
+                Handel mit Filmen und verwandten Medienprodukten, Medien- und
+                Filmproduktion.
               </p>
             </Block>
 
             <Block titel="Aufsichtsbehörde">
-              <p>
-                <Platzhalter>
-                  zuständige Gewerbebehörde, in der Regel die
-                  Bezirkshauptmannschaft Innsbruck-Land
-                </Platzhalter>
-              </p>
+              <p>Bezirkshauptmannschaft Innsbruck-Land</p>
             </Block>
 
             <Block titel="Kammerzugehörigkeit">
               <p>
                 Mitglied der Wirtschaftskammer Österreich, Wirtschaftskammer
-                Tirol, Fachgruppe Unternehmensberatung, Buchhaltung und
-                Informationstechnologie (UBIT).
+                Tirol, Fachgruppe Filmproduktion.
               </p>
               <p>
-                <a href="https://www.wko.at/ubit" className={LINK} rel="noopener">
-                  wko.at/ubit
+                <a
+                  href="https://www.wko.at/tirol/gewerbe-handwerk/film-musikwirtschaft/start"
+                  className={LINK}
+                  rel="noopener"
+                >
+                  Fachvertretung Film- und Musikwirtschaft, Wirtschaftskammer
+                  Tirol
                 </a>
               </p>
             </Block>
@@ -134,10 +131,9 @@ export default function Impressum() {
                 Alternative-Streitbeilegung-Gesetz.
               </p>
               <p>
-                <Platzhalter>
-                  Erklärung, ob an einem Streitbeilegungsverfahren vor einer
-                  Verbraucherschlichtungsstelle teilgenommen wird
-                </Platzhalter>
+                Wir sind nicht verpflichtet und nicht bereit, an einem
+                Streitbeilegungsverfahren vor einer
+                Verbraucherschlichtungsstelle teilzunehmen.
               </p>
               <p>
                 <a
