@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import Image from "next/image";
 
 import foto from "@/public/ueber-mich.jpg";
@@ -76,12 +78,27 @@ const VERLAUF = `linear-gradient(
     rgb(5 7 10 / 1) 100%
   )`;
 
-const ABSAETZE = [
+/*
+ * Der Satz stand frueher im letzten Absatz. Er steht jetzt nur noch hier, als
+ * Zitat neben dem Text, und ist dort entsprechend entfernt.
+ */
+const ZITAT = "Ich suche die Ursache, statt das Symptom zu kaschieren.";
+
+/** Weiss und halbfett, nur fuer die drei Begriffe aus der Praxis. */
+const HERVOR = "font-semibold text-foreground";
+
+const ABSAETZE: ReactNode[] = [
   "Angefangen habe ich vor über zwanzig Jahren mit Webseiten, Photoshop und After Effects, ausgebildet an der Bayerischen Akademie für Fernsehen. Danach kamen ein Filmlabel, ein Restaurant und die Erkenntnis, dass es für die meisten Probleme, die ich hatte, keine passende Software gab.",
   "Also habe ich sie gebaut. Eine Streaming-Plattform mit Abrechnung an Rechteinhaber. Ein Bestellsystem, weil das gekaufte nicht taugte. Eine Versandautomatisierung, weil das Etikettenkleben zu lange dauerte.",
-  "Deshalb weiß ich, was hinter den Anforderungen steckt, wenn jemand von Steuerlogik, Ausschüttung oder Kassendruck spricht. Ich habe diese Prozesse selbst geführt, bevor ich sie programmiert habe.",
+  <>
+    Deshalb weiß ich, was hinter den Anforderungen steckt, wenn jemand von{" "}
+    <strong className={HERVOR}>Steuerlogik</strong>,{" "}
+    <strong className={HERVOR}>Ausschüttung</strong> oder{" "}
+    <strong className={HERVOR}>Kassendruck</strong> spricht. Ich habe diese
+    Prozesse selbst geführt, bevor ich sie programmiert habe.
+  </>,
   "Ich bin an Filmsets gestanden und habe zugesehen, wie Abläufe unter Zeitdruck tatsächlich funktionieren. Das prägt bis heute, wie ich entwickle: nicht nur, ob eine Funktion technisch stimmt, sondern ob sie im Arbeitsalltag trägt. Software wird von Menschen benutzt, die etwas anderes zu tun haben, als sich mit Software zu beschäftigen.",
-  "Und weil ich meine Systeme selbst betreibe, entwickle ich anders: Ich suche die Ursache, statt das Symptom zu kaschieren, und ich treffe Entscheidungen mit Blick darauf, wie sie sich in zwei Jahren anfühlen.",
+  "Und weil ich meine Systeme selbst betreibe, treffe ich Entscheidungen mit Blick darauf, wie sie sich in zwei Jahren anfühlen.",
 ];
 
 /**
@@ -142,14 +159,35 @@ export function UeberMich() {
       {/* Direkt darunter, ohne Absatz zum Bild, gleiche Hintergrundfarbe. */}
       <div className="px-6 pt-12 pb-24 sm:px-12 md:px-24 md:pt-16 md:pb-32">
         {/*
-          50ch statt 65ch: die Einheit ch misst die Breite der Null, die in
-          dieser Schrift deutlich breiter ist als der Schnitt der Buchstaben.
-          Gemessen ergibt das rund 65 tatsaechliche Zeichen pro Zeile.
+          Ab lg zwei Spalten, 35 zu 55 Prozent, die restlichen 10 sind der
+          Abstand dazwischen: fr teilt auf, was nach dem gap uebrig bleibt.
+          Darunter eine Spalte, das Zitat steht dann ueber dem Text.
         */}
-        <div className="reveal mx-auto max-w-[50ch] space-y-6 text-[clamp(0.95rem,1.4vw,1.15rem)] text-pretty text-muted leading-relaxed">
-          {ABSAETZE.map((absatz, index) => (
-            <p key={index}>{absatz}</p>
-          ))}
+        <div className="reveal mx-auto grid max-w-6xl gap-10 lg:grid-cols-[35fr_55fr] lg:gap-[10%]">
+          <p className="text-[clamp(1.7rem,2.5vw,2.07rem)] font-semibold tracking-[-0.02em] text-balance text-foreground leading-[1.2]">
+            {ZITAT}
+          </p>
+
+          {/*
+            47ch statt 62: die Einheit ch misst die Breite der Null, die in
+            dieser Schrift deutlich breiter ist als der Schnitt der Buchstaben.
+            Gemessen ergibt das rund 62 tatsaechliche Zeichen pro Zeile.
+          */}
+          <div className="max-w-[47ch] space-y-6 text-[clamp(0.95rem,1.4vw,1.15rem)] text-pretty text-muted leading-relaxed">
+            {ABSAETZE.map((absatz, index) => (
+              <p
+                key={index}
+                // Der erste Absatz fuehrt ein: groesser und heller als der Rest.
+                className={
+                  index === 0
+                    ? "text-[clamp(1.24rem,1.8vw,1.5rem)] text-foreground/85 leading-snug"
+                    : undefined
+                }
+              >
+                {absatz}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </section>
